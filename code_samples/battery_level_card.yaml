@@ -1,0 +1,42 @@
+type: custom:button-card
+show_name: false
+show_icon: false
+show_state: false
+custom_fields:
+  battery: >
+    [[[
+      const bedroom = states['sensor.bedroom_smoke_sensor_battery'].state;
+      const office = states['sensor.office_smoke_detector_battery'].state;
+      const living = states['sensor.living_room_smoke_detector_battery'].state;
+      const kitchen = states['binary_sensor.kitchensmokedetector_battery_low'].state;
+      
+      const kitchenStatus = kitchen === 'off' ? '✓' : '⚠';
+      
+      return `BR: ${bedroom}% | OF: ${office}% | LR: ${living}% | KT: ${kitchenStatus}`;
+    ]]]
+styles:
+  card:
+    - padding: 8px
+  custom_fields:
+    battery:
+      - font-size: 14px
+      - text-align: center
+      - color: white
+state:
+  - operator: template
+    value: >
+      [[[ 
+        const bedroom = Number(states['sensor.bedroom_smoke_sensor_battery'].state);
+        const office = Number(states['sensor.office_smoke_detector_battery'].state);
+        const living = Number(states['sensor.living_room_smoke_detector_battery'].state);
+        const kitchen = states['binary_sensor.kitchensmokedetector_battery_low'].state;
+        
+        return bedroom <= 10 || office <= 10 || living <= 10 || kitchen === 'on';
+      ]]]
+    styles:
+      card:
+        - background-color: "#ea4335"  # Red
+  - operator: default
+    styles:
+      card:
+        - background-color: "#34a853"  # Green

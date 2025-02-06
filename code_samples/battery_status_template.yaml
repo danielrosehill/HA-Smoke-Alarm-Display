@@ -1,0 +1,15 @@
+template:
+  - binary_sensor:
+      name: "Smoke Detector Batteries Status"
+      state: >
+        {% set bedroom = states('sensor.bedroom_smoke_sensor_battery')|float(0) %}
+        {% set office = states('sensor.office_smoke_detector_battery')|float(0) %}
+        {% set living_room = states('sensor.living_room_smoke_detector_battery')|float(0) %}
+        {% set kitchen = states('binary_sensor.kitchensmokedetector_battery_low') %}
+        {{ 
+          bedroom <= 10 or 
+          office <= 10 or 
+          living_room <= 10 or 
+          kitchen == 'on'
+        }}
+      device_class: battery

@@ -1,0 +1,178 @@
+title: Smoke Detectors
+type: vertical-stack
+cards:
+  - type: grid
+    columns: 2
+    square: false
+    padding: 5
+    cards:
+      - type: custom:button-card
+        entity: binary_sensor.kitchensmokedetector_smoke
+        name: Kitchen
+        styles:
+          card:
+            - padding: 12px
+            - margin: 5px
+          name:
+            - font-weight: bold
+            - color: white
+          state:
+            - color: white
+        state:
+          - value: "on"
+            styles:
+              card:
+                - background-color: "#ea4335"
+              name:
+                - color: white
+              state:
+                - color: white
+          - value: "off"
+            styles:
+              card:
+                - background-color: "#34a853"
+              name:
+                - color: white
+              state:
+                - color: white
+          - value: unavailable
+            styles:
+              card:
+                - background-color: "#ffa500"
+              name:
+                - color: white
+              state:
+                - color: white
+      - type: custom:button-card
+        entity: binary_sensor.office_smoke_detector_smoke
+        name: Office
+        styles:
+          card:
+            - padding: 12px
+            - margin: 5px
+          name:
+            - font-weight: bold
+            - color: white
+          state:
+            - color: white
+        state:
+          - value: "on"
+            styles:
+              card:
+                - background-color: "#ea4335"
+              name:
+                - color: white
+              state:
+                - color: white
+          - value: "off"
+            styles:
+              card:
+                - background-color: "#34a853"
+              name:
+                - color: white
+              state:
+                - color: white
+          - value: unavailable
+            styles:
+              card:
+                - background-color: "#ffa500"
+              name:
+                - color: white
+              state:
+                - color: white
+      - type: custom:button-card
+        entity: binary_sensor.bedroom_smoke_sensor_smoke
+        name: Bedroom
+        styles:
+          card:
+            - padding: 12px
+            - margin: 5px
+          name:
+            - font-weight: bold
+            - color: white
+          state:
+            - color: white
+        state:
+          - value: "on"
+            styles:
+              card:
+                - background-color: "#ea4335"
+              name:
+                - color: white
+              state:
+                - color: white
+          - value: "off"
+            styles:
+              card:
+                - background-color: "#34a853"
+              name:
+                - color: white
+              state:
+                - color: white
+          - value: unavailable
+            styles:
+              card:
+                - background-color: "#ffa500"
+              name:
+                - color: white
+              state:
+                - color: white
+      - type: custom:button-card
+        entity: binary_sensor.living_room_smoke_detector_smoke
+        name: Living Room
+        styles:
+          card:
+            - padding: 12px
+            - margin: 5px
+          name:
+            - font-weight: bold
+            - color: white
+          state:
+            - color: white
+        state:
+          - value: "on"
+            styles:
+              card:
+                - background-color: "#ea4335"
+              name:
+                - color: white
+              state:
+                - color: white
+          - value: "off"
+            styles:
+              card:
+                - background-color: "#34a853"
+              name:
+                - color: white
+              state:
+                - color: white
+          - value: unavailable
+            styles:
+              card:
+                - background-color: "#ffa500"
+              name:
+                - color: white
+              state:
+                - color: white
+  - type: markdown
+    style: |
+      ha-card {
+        padding: 16px;
+        margin-top: 16px;
+      }
+    content: >
+      {% set total = 4 %} {% set active = namespace(count=0) %} {% set
+      unavailable = namespace(count=0) %} {% set devices =
+      ['binary_sensor.kitchensmokedetector_smoke', 
+                       'binary_sensor.office_smoke_detector_smoke',
+                       'binary_sensor.bedroom_smoke_sensor_smoke',
+                       'binary_sensor.living_room_smoke_detector_smoke'] %}
+      {% for device in devices %}
+        {% if states(device) == 'on' %}
+          {% set active.count = active.count + 1 %}
+        {% elif states(device) == 'unavailable' %}
+          {% set unavailable.count = unavailable.count + 1 %}
+        {% endif %}
+      {% endfor %} {% set online = total - unavailable.count %} {{ online }}
+      alarms online, {{ active.count }} activated, {{ unavailable.count }}
+      unavailable

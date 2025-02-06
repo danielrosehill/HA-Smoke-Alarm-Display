@@ -1,0 +1,15 @@
+type: custom:button-card
+entity: binary_sensor.smoke_alarms
+name: Smoke Alarms (All)
+icon: mdi:smoke-detector
+show_state: true
+styles:
+  card:
+    - padding: 12px
+  state:
+    - padding-top: 8px
+state:
+  - value: "off"
+    color: var(--success-color)
+  - value: "on"
+    color: var(--error-color)
